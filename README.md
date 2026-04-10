@@ -31,8 +31,72 @@ PROCEDURE:
 6.Verify the generated results
 
 PROGRAM:
+```
+clc;
+clear;
+
+// Parameters
+Ac = 9.4;
+Am = 18.8;
+fm = 363;
+fc = 3630;
+fs = 36300;
+
+// Time axis (short window)
+t = 0:1/fs:0.05;
+
+// SSB signals
+LSB = Am*cos(2*%pi*(fc-fm)*t);
+USB = Am*cos(2*%pi*(fc+fm)*t);
+
+// Plot LSB
+subplot(4,1,1)
+plot(t,LSB)
+title("SSB Modulated Signal (LSB)")
+xlabel("time")
+ylabel("Amplitude")
+
+// Plot USB
+subplot(4,1,2)
+plot(t,USB)
+title("SSB Modulated Signal (USB)")
+xlabel("time")
+ylabel("Amplitude")
+
+// Spectrum
+N = length(t);
+f = (-N/2:N/2-1)*(fs/N);
+
+LSB_spec = abs(fftshift(fft(LSB)));
+USB_spec = abs(fftshift(fft(USB)));
+
+// LSB Spectrum
+subplot(4,1,3)
+plot(f,LSB_spec)
+title("SSB Signal Spectrum (LSB)")
+xlabel("Frequency")
+ylabel("Magnitude")
+
+// USB Spectrum
+subplot(4,1,4)
+plot(f,USB_spec)
+title("SSB Signal Spectrum (USB)")
+xlabel("Frequency")
+ylabel("Magnitude")
+
+xgrid();
+
+```
 
 OUTPUT GRAPH:
+<img width="1600" height="850" alt="image" src="https://github.com/user-attachments/assets/13169ce9-8698-4ac8-9ff0-d71938c6e113" />
+
+TABULATION:
+<img width="1600" height="790" alt="image" src="https://github.com/user-attachments/assets/d29ceab4-4f06-47e3-8371-c351f4b8be62" />
+
+
 
 RESULT:
+<img width="1600" height="720" alt="image" src="https://github.com/user-attachments/assets/4b5b068b-6d59-4ffd-9691-d61e7e3b006d" />
+
 
